@@ -118,7 +118,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
         options = {
             {
                 icon = 'fa-solid fa-screwdriver',
-                label = Config.Locales['LockpickDoor'],
+                label = locale('LockpickDoor'),
                 canInteract = function()
                     return DoorSystemGetDoorState(index) == 1 and exports.ox_inventory:GetItemCount(Config.Containers.LockpickItem) > 0
                 end,
@@ -127,12 +127,12 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                         if cops >= Config.MinPolice then
                             local result = exports["t3-lockpick"]:startLockpick("lockpick", 2, 6)
                             if not result then
-                                lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['YouFailed'], type = 'error' })
+                                lib.notify({ title = locale('ContainerRobbery'), description = locale('YouFailed'), type = 'error' })
                                 ExecuteCommand('emotecancel')
                             else
                                 DoorSystemSetDoorState(index, 0)
                                 TriggerServerEvent('arc-containerrob:updateStatus', index, false)
-                                lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['DoorOpened'], type = 'success' })
+                                lib.notify({ title = locale('ContainerRobbery'), description = locale('DoorOpened'), type = 'success' })
                                 ExecuteCommand('emotecancel')
                                 local coords = GetEntityCoords(PlayerPedId())
                                 if Config.policeChance then
@@ -158,14 +158,14 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                                 end
                             end
                         else
-                            lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['NotEnoughPolice'], type = 'error' })
+                            lib.notify({ title = locale('ContainerRobbery'), description = locale('NotEnoughPolice'), type = 'error' })
                         end
                     end)
                 end
             },
             {
                 icon = 'fa-solid fa-screwdriver',
-                label = Config.Locales['BreakDoor'],
+                label = locale('BreakDoor'),
                 canInteract = function()
                     return DoorSystemGetDoorState(index) == 1 and exports.ox_inventory:GetItemCount(Config.Containers.BreakDoorItem) > 0
                 end,
@@ -174,7 +174,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                         if cops >= Config.MinPolice then
                             local coords = GetEntityCoords(PlayerPedId())
                             if lib.progressCircle({
-                                label = Config.Locales['Breaking'],
+                                label = locale('Breaking'),
                                 duration = 10000,
                                 position = 'bottom',
                                 useWhileDead = false,
@@ -184,7 +184,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                             }) then
                                 DoorSystemSetDoorState(index, 0)
                                 TriggerServerEvent('arc-containerrob:updateStatus', index, false)
-                                lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['DoorOpened'], type = 'success' })
+                                lib.notify({ title = locale('ContainerRobbery'), description = locale('DoorOpened'), type = 'success' })
                                 if Config.policeChance then
                                     if math.random(1, 100) <= Config.policeChance then
                                         Dispatch(type) 
@@ -207,7 +207,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                                 end
                             end
                         else
-                            lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['NotEnoughPolice'], type = 'error' })
+                            lib.notify({ title = locale('ContainerRobbery'), description = locale('NotEnoughPolice'), type = 'error' })
                         end
                     end)
                 end
@@ -215,7 +215,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
          
             {
                 icon = 'fa-solid fa-lock',
-                label = Config.Locales['LockDoor'],
+                label = locale('LockDoor'),
                 canInteract = function()
              
                     local playerData = QBCore.Functions.GetPlayerData()
@@ -223,7 +223,7 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                 end,
                 onSelect = function()
                     if lib.progressCircle({
-                        label = Config.Locales['Locking'],
+                        label = locale('Locking'),
                         duration = 20000,
                         position = 'bottom',
                         useWhileDead = false,
@@ -233,9 +233,9 @@ AddEventHandler('arc-containerrob:setTargets', function(data, index)
                     }) then
                         DoorSystemSetDoorState(index, 1) 
                         TriggerServerEvent('arc-containerrob:updateStatus', index, true)
-                        lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['DoorLocked'], type = 'success' })
+                        lib.notify({ title = locale('ContainerRobbery'), description = locale('DoorLocked'), type = 'success' })
                     else
-                        lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['Canceled'], type = 'error' })
+                        lib.notify({ title = locale('ContainerRobbery'), description = locale('Canceled'), type = 'error' })
                     end
                 end
             }
@@ -253,7 +253,7 @@ for k, v in pairs(data.cabinets) do
         options = {
             {
                 icon = 'fa-solid fa-magnifying-glass',
-                label = Config.Locales['SearchCabinet'],
+                label = locale('SearchCabinet'),
                 distance = 1,
                 canInteract = function()
                     return DoorSystemGetDoorState(index) == 0
@@ -261,7 +261,7 @@ for k, v in pairs(data.cabinets) do
                 onSelect = function()
                     QBCore.Functions.TriggerCallback('arc-containerrob:checkData', function(savedData)
                         if savedData[index].cabinets[k].taken then
-                            lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['CabinetSearched'], type = 'error' })
+                            lib.notify({ title = locale('ContainerRobbery'), description = locale('CabinetSearched'), type = 'error' })
                         else
                             if v.skillcheck <= Config.Containers.Cabinets.ChanceOfSkillcheck then
                                 local success = exports[Config.UIExport]:Untangle(3, {
@@ -269,12 +269,12 @@ for k, v in pairs(data.cabinets) do
                                     duration = 15000,
                                 })
                                 if not success then
-                                    lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['YouFailed'], type = 'error' })
+                                    lib.notify({ title = locale('ContainerRobbery'), description = locale('YouFailed'), type = 'error' })
                                     return
                                 end
                             end
                             if lib.progressCircle({
-                                label = Config.Locales['CabinetSearching'],
+                                label = locale('CabinetSearching'),
                                 duration = Config.cabinettime,
                                 position = 'bottom',
                                 useWhileDead = false,
@@ -284,7 +284,7 @@ for k, v in pairs(data.cabinets) do
                             }) then
                                 TriggerServerEvent('arc-containerrob:giveLoot', index, k)
                             else 
-                                lib.notify({ title = Config.Locales['ContainerRobbery'], description = Config.Locales['Canceled'], type = 'error' })
+                                lib.notify({ title = locale('ContainerRobbery'), description = locale('Canceled'), type = 'error' })
                             end
                         end
                     end)

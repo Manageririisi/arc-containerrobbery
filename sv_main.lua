@@ -105,7 +105,7 @@ AddEventHandler('arc-containerrob:giveLoot', function(containerindex, cabinetind
     if totalAmountofLoot == 0 then
         TriggerClientEvent('ox_lib:notify', source, {
             title = 'Konttimurto',
-            description = Config.Locales['NothingFound'],
+            description = locale('NothingFound'),
             type = 'error'
         })
     end

@@ -5,23 +5,6 @@ Config.Core = 'qb-core' -- 'qb-core' or 'esx'
 Config.dispatch = 'custom' -- 'custom', 'ps' or 'cd'
 Config.cabinets = "helnius" -- "helnius" or "slb2k11"
 Config.UIExport = "arc-ui" -- name of you UI export (https://github.com/Byte-Labs-Studio/bl_ui/releases)
-Config.Locales = {
-    ['ContainerRobbery'] = 'Konttimurto',
-    ['LockpickDoor'] = 'Tiirikoi ovi',
-    ['BreakDoor'] = 'Murra ovi',
-    ['LockDoor'] = 'Lukitse ovi',
-    ['SearchCabinet'] = 'Tutki',
-    ['YouFailed'] = 'Epäonnistuit!',
-    ['DoorOpened'] = 'Ovi avattu!',
-    ['DoorLocked'] = 'Ovi lukittu!',
-    ['CabinetSearched'] = 'Kaappi on jo tutkittu!',
-    ['CabinetSearching'] = 'Tutkitaan',
-    ['HackConnecting'] = 'Yhdistetään',
-    ['Breaking'] = 'Murretaan ovea',
-    ['Canceled'] = 'Peruutettu',
-    ['NothingFound'] = 'Kaapista ei löytynyt mitään!',
-    ['NotEnoughPolice'] = 'Ei tarpeeksi poliiseja!', 
-}
 Config.policeChance = 100 -- chance of the police being alerted
 
 Config.MinPolice = 1 -- Minimum number of police required to start robbery

@@ -1,0 +1,17 @@
+{
+    "ContainerRobbery": "Container Robbery",
+    "LockpickDoor": "Lockpick Door",
+    "BreakDoor": "Break Door",
+    "LockDoor": "Lock Door",
+    "SearchCabinet": "Search",
+    "YouFailed": "You failed!",
+    "DoorOpened": "Door opened!",
+    "DoorLocked": "Door locked!",
+    "CabinetSearched": "Cabinet has already been searched!",
+    "CabinetSearching": "Searching",
+    "HackConnecting": "Connecting",
+    "Breaking": "Breaking door",
+    "Canceled": "Canceled",
+    "NothingFound": "Nothing found in the cabinet!",
+    "NotEnoughPolice": "Not enough police officers!"
+}

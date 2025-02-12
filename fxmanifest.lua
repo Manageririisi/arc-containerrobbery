@@ -10,6 +10,10 @@ shared_scripts {
     'config.lua'
 }
 
+files {
+    'locales/*.json'
+}
+
 server_script 'sv_main.lua'
 
 client_script 'cl_main.lua'
@@ -17,5 +21,6 @@ client_script 'cl_main.lua'
 lua54 'yes'
 
 escrow_ignore {
-    "config.lua"
+    'config.lua',
+    'locales/*.json'
 }
