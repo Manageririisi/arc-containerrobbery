@@ -36,8 +36,7 @@ local function GetCops()
     return cops
 end
 
-RegisterServerEvent('arc-containerrob:saveCoords')
-AddEventHandler('arc-containerrob:saveCoords', function(data)
+RegisterNetEvent('arc-containerrob:saveCoords', function(data)
     if not isDataSaved(data) then
         local index = #savedData + 1
         table.insert(savedData, data)
@@ -46,30 +45,52 @@ AddEventHandler('arc-containerrob:saveCoords', function(data)
     end
 end)
 
-RegisterServerEvent('arc-containerrob:server:notifyPolice')
-AddEventHandler('arc-containerrob:server:notifyPolice', function(coords)
+RegisterNetEvent('arc-containerrob:server:notifyPolice', function(coords)
     TriggerClientEvent('arc-containerrob:client:notifyPolice', -1, coords)
 end)
 
-RegisterServerEvent('arc-containerrob:updateStatus')
-AddEventHandler('arc-containerrob:updateStatus', function(index, newStatus)
+RegisterNetEvent('arc-containerrob:updateStatus', function(index, newStatus)
     if savedData[index] then
-        if newStatus == true then
+        if newStatus then
             for _, v in pairs(savedData[index].cabinets) do
                 v.taken = false
             end
         end
+            
         savedData[index].status = newStatus
     end
 end)
 
-RegisterServerEvent('arc-containerrob:giveLoot')
-AddEventHandler('arc-containerrob:giveLoot', function(containerindex, cabinetindex)
+RegisterNetEvent('arc-containerrob:giveLoot', function(containerindex, cabinetindex)
     local ped = GetPlayerPed(source)
     local position = GetEntityCoords(ped)
 
+    -- BETTER ERROR HANDLING
+    if not containerindex or not cabinetindex then
+        return print('Do something about this modder! ID: ' .. source)
+    end
+
+    -- PREVENT PEOPLE FROM TRIGGERING FALSE CONTAINER INDEX
+    if not savedData[containerindex] then
+        return print('Do something about this modder! ID: ' .. source)
+    end
+
     if #(position - savedData[containerindex].doorcoords) >= 20 then
-        return print('Do something about this modder! ID: '..source)
+        return print('Do something about this modder! ID: ' .. source)
+    end
+
+    -- PREVENT PEOPLE FROM TRIGGERING FALSE CABINET INDEX
+    if not savedData[containerindex].cabinets[cabinetindex] then
+        return print('Do something about this modder! ID: ' .. source)
+    end
+
+    -- PREVENT PEOPLE FROM LOOTING THE SAME CABINET OVER AND OVER AGAIN
+    if savedData[containerindex].cabinets[cabinetindex].taken then
+        return TriggerClientEvent('ox_lib:notify', source, {
+            title = 'Konttimurto',
+            description = locale('NothingFound'),
+            type = 'error'
+        })
     end
 
     local totalAmountofLoot = 0
@@ -113,8 +134,7 @@ AddEventHandler('arc-containerrob:giveLoot', function(containerindex, cabinetind
     savedData[containerindex].cabinets[cabinetindex].taken = true
 end)
 
-RegisterServerEvent('arc-containerrob:onStart')
-AddEventHandler('arc-containerrob:onStart', function()
+RegisterNetEvent('arc-containerrob:onStart', function()
     for k, v in pairs(savedData) do
         TriggerClientEvent('arc-containerrob:setTargets', -1, v, k)
     end
